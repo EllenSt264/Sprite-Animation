@@ -36,25 +36,30 @@ class Character {
         // Assigns correct animation frame to movement
         if (this.action === "up") {
             this.frameY = 0;
+            this.minFrame = 4;
+            this.maxFrame = 15;
         } 
         else if (this.action === "right") {
             this.frameY = 3;
+            this.minFrame = 3;
+            this.maxFrame = 13;
         }
         else if (this.action === "jump") {
             this.frameY = 7;
+            this.minFrame = 0;
+            this.maxFrame = 9;
         }
-
     }
     // To get this sprite to animate
     draw() {
         drawSprite(images.player, this.width * this.frameX, this.height * this.frameY, this.width, this.height,
         this.x, this.y, this.width, this.height);
         // Allows for the sprite's walking animation
-        if (this.frameX < 13) {
+        if (this.frameX < this.maxFrame) {
             this.frameX ++;
         }
         else {
-            this.frameX = 3;
+            this.frameX = this.minFrame;
         }
     }
     // Custom method
