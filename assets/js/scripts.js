@@ -8,7 +8,8 @@ images.player = new Image();
 images.player.src = "../assets/img/cuphead.png";
 
 // JavaScript es6 class is used when you want to create many similar objects
-const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
+//const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
+const characterActions = ["up", "right"];
 
 // Created one instance of the Character class and pushed it into the characters array
 const characters = [];
@@ -29,7 +30,8 @@ class Character {
         this.y = 0;
         this.speed = (Math.random() * 1.5) + 3.5;   // random num between 3.5 and 5
         // Will determine what direction the sprite is walking
-        this.action = "right";     // taken from characterActions array
+        // Math.floor returns the largest integer less than or equal to a given number - round down the decimals
+        this.action = characterActions[Math.floor(Math.random() * characterActions.length)];     
     }
     // To get this sprite to animate
     draw() {
@@ -46,13 +48,24 @@ class Character {
     // Custom method
     update() {
         if (this.action === "right") {
-            if (this.x < canvas.width + this.width) {
-            this.x += this.speed;
-            }
             /* When the sprite walks past the right edge of canvas, we will reset it and hide it just before the left edge of canvas
             like an infinite loop */
-            else {
+            if (this.x > canvas.width + this.width) {
                 this.x = 0 - this.width;
+                // set y property to be a random number between 0 and canvas height - character height
+                this.y = Math.random() * (canvas.height - this.height);
+            }
+            else {
+                this.x += this.speed;
+            }
+        }
+        else if (this.action === "up") {
+            if (this.y < (0 - this.height)) {
+                this.y = canvas.height + this.height;
+                this.x = Math.random() * canvas.width;
+            }
+            else {  // the sprite hasn't walked off the screen yet, push it up
+                this.y -= this.speed;
             }
         }
     }
