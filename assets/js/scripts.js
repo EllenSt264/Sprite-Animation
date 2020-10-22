@@ -9,7 +9,7 @@ images.player.src = "../assets/img/cuphead.png";
 
 // JavaScript es6 class is used when you want to create many similar objects
 //const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
-const characterActions = ["up", "right"];
+const characterActions = ["up", "right", "jump"];
 
 const numberOfCharacters = 10;
 
@@ -27,13 +27,23 @@ class Character {
         this.width = 103.0625;
         this.height = 113.125;
         this.frameX = 3;
-        this.frameY = 3;
-        this.x = 0;
-        this.y = 0;
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
         this.speed = (Math.random() * 1.5) + 3.5;   // random num between 3.5 and 5
         // Will determine what direction the sprite is walking
         // Math.floor returns the largest integer less than or equal to a given number - round down the decimals
-        this.action = characterActions[Math.floor(Math.random() * characterActions.length)];     
+        this.action = characterActions[Math.floor(Math.random() * characterActions.length)]; 
+        // Assigns correct animation frame to movement
+        if (this.action === "up") {
+            this.frameY = 0;
+        } 
+        else if (this.action === "right") {
+            this.frameY = 3;
+        }
+        else if (this.action === "jump") {
+            this.frameY = 7;
+        }
+
     }
     // To get this sprite to animate
     draw() {
