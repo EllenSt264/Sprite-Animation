@@ -9,9 +9,9 @@ images.player.src = "../assets/img/cuphead.png";
 
 // JavaScript es6 class is used when you want to create many similar objects
 //const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
-const characterActions = ["up", "right", "jump", "down right"];
+const characterActions = ["up", "right", "jump", "down right", "down", "top right"];
 
-const numberOfCharacters = 10;
+const numberOfCharacters = 30;
 
 // Created one instance of the Character class and pushed it into the characters array
 const characters = [];
@@ -34,25 +34,35 @@ class Character {
         // Math.floor returns the largest integer less than or equal to a given number - round down the decimals
         this.action = characterActions[Math.floor(Math.random() * characterActions.length)]; 
         // Assigns correct animation frame to movement
-        if (this.action === "up") {
-            this.frameY = 0;
+        if (this.action === 'up') {
+            this.frameY = 0; 
             this.minFrame = 4;
             this.maxFrame = 15;
-        } 
-        else if (this.action === "right") {
-            this.frameY = 3;
+        }
+        else if (this.action === 'top right') {
+            this.frameY = 1; 
+            this.minFrame = 4;
+            this.maxFrame = 14;
+        }
+        else if (this.action === 'right') {
+            this.frameY = 3; 
             this.minFrame = 3;
             this.maxFrame = 13;
         }
-        else if (this.action === "jump") {
-            this.frameY = 7;
-            this.minFrame = 0;
-            this.maxFrame = 9;
-        }
-        else if (this.action === "down right") {
+        else if (this.action === 'down right') {
             this.frameY = 4;
             this.minFrame = 4;
             this.maxFrame = 15;
+        } 
+        else if (this.action === 'down') {
+            this.minFrame = 0;
+            this.frameY = 6;
+            this.maxFrame = 12;
+        }
+        else if (this.action === 'jump') {
+            this.minFrame = 0;
+            this.frameY = 7; 
+            this.maxFrame = 9;
         }
     }
     // To get this sprite to animate
@@ -67,7 +77,8 @@ class Character {
             this.frameX = this.minFrame;
         }
     }
-    // Custom method
+
+    // Custom method for each walking animation
     update() {
         if (this.action === "right") {
             /* When the sprite walks past the right edge of canvas, we will reset it and hide it just before the left edge of canvas
@@ -102,6 +113,28 @@ class Character {
                 this.y += this.speed;
                 this.x += this.speed;
             }
+        }
+        else if (this.action === 'top right') {
+             if (this.y < 0 - this.height && this.x > canvas.width + this.width) {
+                 this.y = canvas.height + this.height
+                 this.x = Math.random() * canvas.width;
+                 this.speed = (Math.random() * 2) + 3;
+             } else {
+                 this.y -= this.speed; 
+                 this.x += this.speed; 
+             }
+        }
+        else if (this.action === 'down') {
+             if (this.y > canvas.height + (this.height * 5)) {
+                 this.y = 0 - this.height;
+                 this.x = Math.random() * canvas.width;
+                 this.speed = (Math.random() * 2) + 3;
+             } else {
+                 this.y += this.speed;  
+             }
+        }
+         else if (this.action === 'jump') {
+ 
         }
     }
 }
