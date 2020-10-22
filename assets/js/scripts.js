@@ -9,7 +9,7 @@ images.player.src = "../assets/img/cuphead.png";
 
 // JavaScript es6 class is used when you want to create many similar objects
 //const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
-const characterActions = ["up", "right", "jump"];
+const characterActions = ["up", "right", "jump", "down right"];
 
 const numberOfCharacters = 10;
 
@@ -49,6 +49,11 @@ class Character {
             this.minFrame = 0;
             this.maxFrame = 9;
         }
+        else if (this.action === "down right") {
+            this.frameY = 4;
+            this.minFrame = 4;
+            this.maxFrame = 15;
+        }
     }
     // To get this sprite to animate
     draw() {
@@ -83,6 +88,19 @@ class Character {
             }
             else {  // the sprite hasn't walked off the screen yet, push it up
                 this.y -= this.speed;
+            }
+        }
+        else if (this.action === "down right") {
+            /* Check if this.y is more than canvas and distant height && if this.x is more than this.width + canvas.width
+            Check if the character has walked past the edge along both horizontal and vertical axis
+            */
+            if (this.y < (0 - this.height) && this.x > this.width + canvas.width) {
+                this.y = 0 - this.height;
+                this.x = Math.random() * canvas.width / 2;  // this.width plus canvas width
+            }
+            else {  // the sprite hasn't walked off the screen yet, push it up
+                this.y += this.speed;
+                this.x += this.speed;
             }
         }
     }
