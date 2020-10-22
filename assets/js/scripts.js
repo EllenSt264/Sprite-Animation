@@ -11,6 +11,8 @@ images.player.src = "../assets/img/cuphead.png";
 //const characterActions = ["up", "top right", "right", "down right", "down", "jump"];
 const characterActions = ["up", "right"];
 
+const numberOfCharacters = 10;
+
 // Created one instance of the Character class and pushed it into the characters array
 const characters = [];
 
@@ -71,11 +73,17 @@ class Character {
     }
 }
 
-/* Classes cannot be hoisted the same way function can,
-in this case, you cannot call class constructor before its declared
-it needs to be called AFTER it is declared
+/* The for loop will run 10 times
+And randomly create 10 characters
 */
-characters.push(new Character());
+for (i = 0; i < numberOfCharacters; i++) {
+    /* Classes cannot be hoisted the same way function can,
+    in this case, you cannot call class constructor before its declared
+    it needs to be called AFTER it is declared
+    */
+    characters.push(new Character());
+}
+
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
@@ -83,8 +91,14 @@ function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
 
 function animate() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    characters[0].draw();      // method created in Character class
-    characters[0].update();    // checks if character action is === to right; if so animates it walking to the right
+    /* Cycle through characters array
+    For each of these objects call draw() and update()
+    on them
+    */
+    for (i = 0; i < characters.length; i++) {
+        characters[i].draw();      // method created in Character class
+        characters[i].update();    // checks if character action is === to right; if so animates it walking to the right
+    }
 }
 
 window.onload = setInterval(animate, 1000/30);      // RequestAnimationFrame will be too fast
